@@ -10,11 +10,13 @@ To catch absolutely all kerning, it gathers all unicodes associated with a kerni
 and cross-checks all possible combinations. This is necessary because members of a kerning class
 may be part of different writing scripts and may or may not be included in the font based on their script.
 
-The kerning is lazily read from the `vharfbuzz` buffer through the `x` value of `buf.glyph_positions`.
+The shaped kerning is lazily read from the `vharfbuzz` buffer through the `x` value of `buf.glyph_positions`
+by simply comparing the highest `x` value of each composition.
 
 ## Invocation
 
 From the command line:
+
 `kerningvalidator -s font.glyphs -b font.ttf`
 
 From within Python:
