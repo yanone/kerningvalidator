@@ -24,6 +24,7 @@ From within Python:
 from kerningvalidator import missing_kerning
 
 # Convert this to list() as missing_kerning() is a generator
+# and will otherwise return instantly without results
 missing_kerning = list(missing_kerning("font.glyphs", "font.ttf"))
 ```
 
