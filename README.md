@@ -8,7 +8,7 @@ kerning enabled, then compares the two values.
 
 To catch absolutely all kerning, it gathers all unicodes associated with a kerning class
 and cross-checks all possible combinations. This is necessary because members of a kerning class
-may be part of different writing scripts.
+may be part of different writing scripts and may or may not be included in the font based on their script.
 
 ## Invocation
 
