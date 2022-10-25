@@ -1,7 +1,6 @@
 # Kerning Validator
 
 Compares kerning defined in `.glyphs` source with kerning defined in binary font.
-This is currently limited to encoded glyphs only.
 
 It reads all kerning pairs of all masters of a Variable Font from the `.glyphs` source
 and shapes the pairs using the binary font with `vharfbuzz`, once with and once without 
@@ -25,4 +24,5 @@ missing_kerning = list(kerningvalidator.missing_kerning(source_path, binary_path
 
 ## Limitations
 
-This tool was written with Variable Fonts in mind that contain both `LTR` and `RTL` kerning pairs.
+1. This tool was written with Variable Fonts in mind that contain both `LTR` and `RTL` kerning pairs.
+2. The tests are currently limited to encoded glyphs only.
