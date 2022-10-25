@@ -19,6 +19,7 @@ From within Python:
 ```python
 import kerningvalidator
 
+# Convert this to list() as missing_kerning() is a generator
 missing_kerning = list(kerningvalidator.missing_kerning(source_path, binary_path))
 ```
 
