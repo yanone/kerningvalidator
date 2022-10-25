@@ -27,6 +27,7 @@ missing_kerning = list(missing_kerning(source_path, binary_path))
 
 1. This tool was written with Variable Fonts in mind that contain both `LTR` and `RTL` kerning pairs
 1. This tool currently only consumes `.glyphs` sources, no UFOs
-1. The tests are currently limited to encoded glyphs only
-1. It takes forever
+1. The kerning comparisons are currently limited to encoded glyphs only
 1. The `vharfbuzz` shaping has shown a difference of up to 1 font unit compared to the kerning defined in the `.glyphs` source. The tool therefore allows for 1 unit difference
+1. There are currently no unit tests for this tool
+1. It takes forever for a large font
