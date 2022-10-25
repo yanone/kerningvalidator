@@ -17,10 +17,10 @@ From the command line:
 
 From within Python:
 ```python
-import kerningvalidator
+from kerningvalidator import missing_kerning
 
 # Convert this to list() as missing_kerning() is a generator
-missing_kerning = list(kerningvalidator.missing_kerning(source_path, binary_path))
+missing_kerning = list(missing_kerning(source_path, binary_path))
 ```
 
 ## Limitations
