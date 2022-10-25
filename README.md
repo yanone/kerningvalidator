@@ -10,6 +10,8 @@ To catch absolutely all kerning, it gathers all unicodes associated with a kerni
 and cross-checks all possible combinations. This is necessary because members of a kerning class
 may be part of different writing scripts and may or may not be included in the font based on their script.
 
+The kerning is lazily read from the `vharfbuzz` buffer through the `x` value of `buf.glyph_positions`.
+
 ## Invocation
 
 From the command line:
