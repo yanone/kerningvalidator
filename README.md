@@ -24,5 +24,6 @@ missing_kerning = list(kerningvalidator.missing_kerning(source_path, binary_path
 
 ## Limitations
 
-1. This tool was written with Variable Fonts in mind that contain both `LTR` and `RTL` kerning pairs.
-2. The tests are currently limited to encoded glyphs only.
+1. This tool was written with Variable Fonts in mind that contain both `LTR` and `RTL` kerning pairs
+2. The tests are currently limited to encoded glyphs only
+3. It takes forever
