@@ -5,12 +5,12 @@ import sys
 
 def main():
     parser = argparse.ArgumentParser(description="Compare font source file kerning with font binary file kerning.")
-    parser.add_argument("-s", dest="source", help="Source font file (.glyphs)")
-    parser.add_argument("-b", dest="binary", help="Binary font file (.ttf)")
+    parser.add_argument(dest="glyphs_source", help="Glyphs source font file (.glyphs)")
+    parser.add_argument(dest="binary", help="Binary font file (.ttf/.otf)")
 
     args = parser.parse_args()
 
-    missing_kerning = list(kerningvalidator.missing_kerning(args.source, args.binary))
+    missing_kerning = list(kerningvalidator.missing_kerning(args.glyphs_source, args.binary))
     if missing_kerning:
         sys.exit(1)
 

@@ -17,7 +17,7 @@ by simply comparing the highest `x` value of each composition.
 
 From the command line:
 
-`kerningvalidator -s font.glyphs -b font.ttf`
+`kerningvalidator font.glyphs font.ttf`
 
 From within Python:
 ```python
