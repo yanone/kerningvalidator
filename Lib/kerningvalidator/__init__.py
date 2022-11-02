@@ -96,7 +96,7 @@ def missing_kerning(glyphs_source, font_binary):
                                     difference = found - expected
 
                                     # Allow 1 unit difference for rounding errors
-                                    if difference < 0 or difference > 1:
+                                    if difference < -1 or difference > 1:
                                         first_unicode_as_str = f"{int(first_unicode, 16):#0{6}x}"
                                         second_unicode_as_str = f"{int(second_unicode, 16):#0{6}x}"
                                         logging.error(
