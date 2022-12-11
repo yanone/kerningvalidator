@@ -10,9 +10,6 @@ def build_kerning_classes(source):
             if glyph.name not in kerning_classes[first_group]:
                 kerning_classes[first_group].append(glyph.name)
 
-            if "ain.init.swsh" in glyph.leftKerningGroup:
-                print(glyph.name, glyph.leftKerningGroup)
-
         if glyph.rightKerningGroup:
             second_group = f"@MMK_L_{glyph.rightKerningGroup}"
             if second_group not in kerning_classes:
