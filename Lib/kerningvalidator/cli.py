@@ -10,7 +10,7 @@ def main():
 
     args = parser.parse_args()
 
-    missing_kerning = list(kerningvalidator.missing_kerning(args.glyphs_source, args.binary))
+    missing_kerning = kerningvalidator.missing_kerning(args.glyphs_source, args.binary)
     if missing_kerning:
         sys.exit(1)
 

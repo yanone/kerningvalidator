@@ -1,6 +1,6 @@
 import logging
 import glyphsLib
-from .source import build_kerning_classes, unicodes_for_glyph_or_class
+from .source import build_kerning_classes, unicodes_for_glyph_or_class, glyph_for_unicode
 import vharfbuzz as vhb
 
 
@@ -33,6 +33,8 @@ def shaped_kerning(hb_font, variations, string):
 
 def missing_kerning(glyphs_source, font_binary):
     """Compare kerning between source and binary font files."""
+
+    problems = []
 
     # Open source font file
     source = glyphsLib.load(glyphs_source)
@@ -86,13 +88,43 @@ def missing_kerning(glyphs_source, font_binary):
 
                             # Cycle through all unicode combinations
                             for first_unicode in first_unicodes:
+                                first_glyph = glyph_for_unicode(source, first_unicode)
                                 for second_unicode in second_unicodes:
+                                    second_glyph = glyph_for_unicode(source, second_unicode)
                                     found = shaped_kerning(
                                         hb_font,
                                         variations,
                                         f"{chr(int(first_unicode, 16))}{chr(int(second_unicode, 16))}",
                                     )
+
+                                    # Class kerning
                                     expected = kerning_data[master_id][first][second]
+                                    difference = found - expected
+
+                                    if difference < -1 or difference > 1:
+                                        # Kerning exceptions
+                                        if first_glyph and second_glyph:
+                                            first_name = first_glyph.name
+                                            second_name = second_glyph.name
+
+                                            if (
+                                                first_name in kerning_data[master_id]
+                                                and second_name in kerning_data[master_id][first_name]
+                                            ):
+                                                expected = kerning_data[master_id][first_name][second_name]
+
+                                            elif (
+                                                first in kerning_data[master_id]
+                                                and second_name in kerning_data[master_id][first]
+                                            ):
+                                                expected = kerning_data[master_id][first][second_name]
+
+                                            elif (
+                                                first_name in kerning_data[master_id]
+                                                and second in kerning_data[master_id][first_name]
+                                            ):
+                                                expected = kerning_data[master_id][first_name][second]
+
                                     difference = found - expected
 
                                     # Allow 1 unit difference for rounding errors
@@ -100,21 +132,23 @@ def missing_kerning(glyphs_source, font_binary):
                                         first_unicode_as_str = f"{int(first_unicode, 16):#0{6}x}"
                                         second_unicode_as_str = f"{int(second_unicode, 16):#0{6}x}"
                                         logging.error(
-                                            f"Kerning pair not in binary font: direction: {direction}, variations:"
-                                            f" {variations}, 1st:"
-                                            f" {first} ({chr(int(first_unicode, 16))} {first_unicode_as_str}),"
+                                            f"Not in font: dir: {direction}, var: {variations}, 1st:"
+                                            f" {first} ({chr(int(first_unicode, 16))} {first_unicode_as_str} '{first_glyph.name}'),"
                                             " 2nd:"
-                                            f" {second} ({chr(int(second_unicode, 16))} {second_unicode_as_str}),"
+                                            f" {second} ({chr(int(second_unicode, 16))} {second_unicode_as_str} '{second_glyph.name}'),"
                                             f" expected: {expected}, found: {found})"
                                         )
-                                        yield (
-                                            variations,
-                                            first,  # group or glyph name
-                                            chr(int(first_unicode, 16)),  # encoded character
-                                            int(first_unicode, 16),  # 1st unicode (decimal)
-                                            second,  # group or glyph name
-                                            chr(int(second_unicode, 16)),  # encoded character
-                                            int(second_unicode, 16),  # 2nd unicode (decimal)
-                                            expected,  # expected
-                                            found,  # found
+                                        problems.append(
+                                            (
+                                                variations,
+                                                first,  # group or glyph name
+                                                chr(int(first_unicode, 16)),  # encoded character
+                                                int(first_unicode, 16),  # 1st unicode (decimal)
+                                                second,  # group or glyph name
+                                                chr(int(second_unicode, 16)),  # encoded character
+                                                int(second_unicode, 16),  # 2nd unicode (decimal)
+                                                expected,  # expected
+                                                found,  # found
+                                            )
                                         )
+    return problems

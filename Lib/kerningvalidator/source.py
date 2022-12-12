@@ -32,3 +32,10 @@ def unicodes_for_glyph_or_class(font, glyph_or_class, kerning_classes):
             return font.glyphs[glyph_or_class].unicodes
         else:
             return []
+
+
+def glyph_for_unicode(font, unicode):
+    """Return glyph for unicode."""
+    for glyph in font.glyphs:
+        if unicode in glyph.unicodes:
+            return glyph
