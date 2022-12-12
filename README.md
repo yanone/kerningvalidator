@@ -23,9 +23,11 @@ From within Python:
 ```python
 from kerningvalidator import missing_kerning
 
-# Convert this to list() as missing_kerning() is a generator
-# and will otherwise return instantly without results
-missing_kerning = list(missing_kerning("font.glyphs", "font.ttf"))
+# Get missing kerning
+missing_kerning = missing_kerning("font.glyphs", "font.ttf")
+
+# Success means en ampty list
+assert len(missing_kerning) == 0
 ```
 
 ## Limitations
@@ -42,5 +44,5 @@ missing_kerning = list(missing_kerning("font.glyphs", "font.ttf"))
 
 To create a new package, install twine via `pip install twine`, then `cd` to `Lib/` and then:
 
-* `python setup.py sdist`
+* `python3 setup.py sdist`
 * `twine upload dist/*`
