@@ -36,3 +36,11 @@ missing_kerning = list(missing_kerning("font.glyphs", "font.ttf"))
 1. The `vharfbuzz` shaping has shown a difference of up to 1 font unit compared to the kerning defined in the `.glyphs` source. The tool therefore allows for 1 unit difference
 1. There are currently no unit tests for this tool
 1. It takes forever for a large font
+
+
+## Package
+
+To create a new package, install twine via `pip install twine`, then `cd` to `Lib/` and then:
+
+* `python setup.py sdist`
+* `twine upload dist/*`
